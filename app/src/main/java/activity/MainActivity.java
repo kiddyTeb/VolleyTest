@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -94,7 +95,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.load :
                 Toast.makeText(this , "click" ,Toast.LENGTH_LONG).show();
-                new Thread(new Runnable() {
+                /*new Thread(new Runnable() {
                     @Override
                     public void run() {
                         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
@@ -119,7 +120,21 @@ public class MainActivity extends Activity implements View.OnClickListener{
                         requestQueue.add(imageRequest);
                     }
 
-                }).start();
+                }).start();*/
+                        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+                        ImageLoader imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
+                            @Override
+                            public Bitmap getBitmap(String s) {
+                                return null;
+                            }
+
+                            @Override
+                            public void putBitmap(String s, Bitmap bitmap) {
+
+                            }
+                        });
+                        ImageLoader.ImageListener listener = ImageLoader.getImageListener(mIvImage , R.mipmap.menu_city , R.mipmap.ic_launcher);
+                        imageLoader.get("http://img.blog.csdn.net/20140413210233046" , listener);
         }
     }
 }
