@@ -18,9 +18,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.liangdekai.volleytest.R;
+
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import util.MyStringRequest;
 
 /**
  * Created by asus on 2016/7/17.
@@ -71,7 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                     public void run() {
                         //Toast.makeText(MainActivity.this , "aa" ,Toast.LENGTH_LONG).show();
                         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-                        StringRequest stringRequest = new StringRequest("https://www.baidu.com/", new Response.Listener<String>() {
+                        MyStringRequest stringRequest = new MyStringRequest("https://www.baidu.com/", new Response.Listener<String>() {
                             @Override
                             public void onResponse(String s) {
                                 Log.d("test", s);
@@ -90,6 +99,24 @@ public class MainActivity extends Activity implements View.OnClickListener{
                             }
                         });
                         requestQueue.add(stringRequest);
+                        /*JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://blog.csdn.net/lmj623565791/article/details/37970961",
+                                null , new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d("test", response.toString());
+                                String s = response.toString();
+                                Message message = new Message();
+                                message.what = SUCCESS_IN ;
+                                message.obj = s;
+                                mHandler.sendMessage(message);
+                            }
+                        } , new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+                        requestQueue.add(jsonObjectRequest);*/
                     }
                 }).start();
                 break;
