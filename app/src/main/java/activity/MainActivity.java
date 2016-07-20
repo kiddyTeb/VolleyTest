@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import util.MyStringRequest;
+import util.PraseByGson;
 
 /**
  * Created by asus on 2016/7/17.
@@ -80,14 +81,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
                     public void run() {
                         //Toast.makeText(MainActivity.this , "aa" ,Toast.LENGTH_LONG).show();
                         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-                        MyStringRequest stringRequest = new MyStringRequest("https://www.baidu.com/", new Response.Listener<String>() {
+                        StringRequest stringRequest = new StringRequest("http://v.juhe.cn/weather/index?format=2&cityname=%E8%8B%8F%E5%B7%9E&key=5b34e560321fd5f86680b4deb1e30ad8", new Response.Listener<String>() {
                             @Override
                             public void onResponse(String s) {
-                                Log.d("test", s);
-                                Message message = new Message();
+                                /*Message message = new Message();
                                 message.what = SUCCESS_IN ;
                                 message.obj = s;
-                                mHandler.sendMessage(message);
+                                mHandler.sendMessage(message);*/
+                                PraseByGson.praseByGson(s);
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -99,27 +100,29 @@ public class MainActivity extends Activity implements View.OnClickListener{
                             }
                         });
                         requestQueue.add(stringRequest);
-                        /*JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://blog.csdn.net/lmj623565791/article/details/37970961",
+                        /*JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://v.juhe.cn/weather/citys?key=5b34e560321fd5f86680b4deb1e30ad8",
                                 null , new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Log.d("test", response.toString());
+                                /*Log.d("test", response.toString());
                                 String s = response.toString();
                                 Message message = new Message();
                                 message.what = SUCCESS_IN ;
                                 message.obj = s;
                                 mHandler.sendMessage(message);
+                                PraseByGson.praseByGson(response.toString());
                             }
                         } , new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
+                                Log.d("test",error.getMessage());
                             }
                         });
                         requestQueue.add(jsonObjectRequest);*/
                     }
-                }).start();
-                break;
+                    }).start();
+                    break;
+
             case R.id.load :
                 Toast.makeText(this , "click" ,Toast.LENGTH_LONG).show();
                 /*new Thread(new Runnable() {
